@@ -52,7 +52,14 @@ $(function() {
         }
     });
     
-    var loginView = new LoginView();
-    loginView.render();
-    $('.main-container').html(loginView.el);
+    var currentUser = Parse.User.current();
+    if (currentUser) {
+        var welcomeView = new WelcomeView({ model: currentUser });
+        welcomeView.render();
+        $('.main-container').html(welcomeView.el);
+    } else {
+        var loginView = new LoginView();
+        loginView.render();
+        $('.main-container').html(loginView.el);
+    }
 });
